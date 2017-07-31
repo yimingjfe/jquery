@@ -16,7 +16,13 @@
 				this.expando = expando + uid++
 			}
 			cache(owner) {
-
+				var value = owner[this.expando]
+				if(!value) {
+				  if(owner.nodeType) {
+				    owner[ this.expando ] = value
+					}
+				}
+				return value
 			}
 			set(owner, key, value) {
 			  var cache,
@@ -34,8 +40,10 @@
 				}
 				return cache
 			}
-			get(owner, key) {
-
+			get(owner, elem, key) {
+			  return key === undefined ?
+					this.cache(owner) :
+						owner[ this.expando ] && owner[ this.expando ][ jQuery.camelCase( key ) ]
 			}
 			remove(owner, key) {
 

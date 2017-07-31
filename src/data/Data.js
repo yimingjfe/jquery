@@ -30,13 +30,13 @@ Data.prototype = {
 
 				// If it is a node unlikely to be stringify-ed or looped over
 				// use plain assignment
-				// 为什么这样做?
 				if ( owner.nodeType ) {
 					owner[ this.expando ] = value;
 
 				// Otherwise secure it in a non-enumerable property
 				// configurable must be true to allow the property to be
 				// deleted when data is removed
+				// 什么情况下会有这种情况
 				// 如果是一个对象的话，将属性保存在不可枚举的属性中; 但是属性是可配置的，这样当数据被移除的话；属性会被删除
 				} else {
 					Object.defineProperty( owner, this.expando, {
