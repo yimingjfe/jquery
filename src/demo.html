@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+	<style>
+
+	</style>
+</head>
+<body>
+	<div class="person" data-gender="male"></div>
+	<script src="../dist/jquery.js"></script>
+	<script>
+		class Data{
+			constructor(){
+				this.expando = expando + uid++
+			}
+			cache(owner) {
+
+			}
+			set(owner, key, value) {
+			  var cache,
+						prop;
+			  cache = this.cache(owner);
+
+				if(typeof key === "string") {
+					cache[ jQuery.camelCase( data ) ] = value;
+				} else {
+
+					// Copy the properties one-by-one to the cache object
+					for ( prop in key ) {
+						cache[ jQuery.camelCase( prop ) ] = key[ prop ];
+					}
+				}
+				return cache
+			}
+			get(owner, key) {
+
+			}
+			remove(owner, key) {
+
+			}
+		}
+
+		var dataUser = new Data()
+		var dataPriv = new Data()
+
+		function dataAttr(elem, key, data) {
+		  var name;
+		  if(data === undefined && elem.nodeType === 1) {
+				name = "data-" + key.replace( rmultiDash, "-$&" ).toLowerCase();
+		    data = elem.getAttribute(name)
+		   	try {
+		      data = getData(data)
+				} catch( e ){}
+				dataUser.set(elem, name, data)
+			}
+			return data
+		}
+
+		function data(key, value){
+			var data,
+					attrs,
+					length,
+					name,
+					elem = this[0];
+
+			if(key === undefined) {
+				data = dataUser.get(elem)
+				if(this.length > 0) {
+					if(!dataPriv.get(elem, "hasAttrbutes") && elem.nodeType === 1) {
+						attrs = elem.attributes
+						length = attrs.length
+						while(length--) {
+						  if(attrs[length]) {
+								name = attrs[length].name
+								if(name.indexOf("data-") === 0) {
+									name = jQuery.camelCase( name.slice( 5 ) );
+								  dataAttr(elem, name, data[name])
+								}
+							}
+						}
+					}
+				}
+				return data
+			}
+
+		}
+		function myQuery(selector) {
+			var elems = document.querySelectorAll(selector)
+			elems = Array.from(elems)
+			elems.data = data
+			return elems
+		}
+		var expando = Math.random()
+		var uid = 1
+
+
+
+		var person = myQuery('.person')
+		var people = {
+		  name: "ttt",
+			gender: "male"
+		}
+		var d = person.data()
+		console.log(d)
+	</script>
+</body>
+</html>

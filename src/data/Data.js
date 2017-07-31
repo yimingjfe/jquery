@@ -1,3 +1,4 @@
+/* eslint-disable */
 define( [
 	"../core",
 	"../var/rnothtmlwhite",
@@ -7,15 +8,14 @@ define( [
 "use strict";
 
 function Data() {
+	//每一个data对象都有一个标识符
 	this.expando = jQuery.expando + Data.uid++;
 }
 
 Data.uid = 1;
-
 Data.prototype = {
-
+	//如果没有，设置元素的该属性为空对象
 	cache: function( owner ) {
-
 		// Check if the owner object already has a cache
 		var value = owner[ this.expando ];
 
@@ -30,12 +30,14 @@ Data.prototype = {
 
 				// If it is a node unlikely to be stringify-ed or looped over
 				// use plain assignment
+				// 为什么这样做?
 				if ( owner.nodeType ) {
 					owner[ this.expando ] = value;
 
 				// Otherwise secure it in a non-enumerable property
 				// configurable must be true to allow the property to be
 				// deleted when data is removed
+				// 如果是一个对象的话，将属性保存在不可枚举的属性中; 但是属性是可配置的，这样当数据被移除的话；属性会被删除
 				} else {
 					Object.defineProperty( owner, this.expando, {
 						value: value,
@@ -66,6 +68,7 @@ Data.prototype = {
 		}
 		return cache;
 	},
+	//如果有key就返回相应的属性值，如果没key,就返回整个对象
 	get: function( owner, key ) {
 		return key === undefined ?
 			this.cache( owner ) :

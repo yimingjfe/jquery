@@ -1,3 +1,4 @@
+/* eslint-disable */
 define( [
 	"./core",
 	"./core/access",
@@ -34,6 +35,7 @@ function getData( data ) {
 	}
 
 	// Only convert to a number if it doesn't change the string
+	// 如果是数字的字符串，转换为数字
 	if ( data === +data + "" ) {
 		return +data;
 	}
@@ -45,16 +47,19 @@ function getData( data ) {
 	return data;
 }
 
+//如果有data就设置，没有就直接返回data
 function dataAttr( elem, key, data ) {
 	var name;
 
 	// If nothing was found internally, try to fetch any
 	// data from the HTML5 data-* attribute
 	if ( data === undefined && elem.nodeType === 1 ) {
+
 		name = "data-" + key.replace( rmultiDash, "-$&" ).toLowerCase();
 		data = elem.getAttribute( name );
-
+		//判断如果有这个属性，可能为null
 		if ( typeof data === "string" ) {
+			//为什么要使用try ... catch
 			try {
 				data = getData( data );
 			} catch ( e ) {}
@@ -92,6 +97,7 @@ jQuery.extend( {
 	}
 } );
 
+// 获取所有的值,get attributes;遍历，符合"data-"的属性，执行dataAttr()
 jQuery.fn.extend( {
 	data: function( key, value ) {
 		var i, name, data,
@@ -100,9 +106,9 @@ jQuery.fn.extend( {
 
 		// Gets all values
 		if ( key === undefined ) {
+			//如果没有节点，直接返回undefined
 			if ( this.length ) {
 				data = dataUser.get( elem );
-
 				if ( elem.nodeType === 1 && !dataPriv.get( elem, "hasDataAttrs" ) ) {
 					i = attrs.length;
 					while ( i-- ) {
