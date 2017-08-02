@@ -11,15 +11,28 @@
 	<div class="person" data-gender="male"></div>
 	<script src="../dist/jquery.js"></script>
 	<script>
+		var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,
+				rmultiDash = /[A-Z]/g;
+
+		var expando = Math.random()
+		var uid = 1
+
+		function acceptData( owner ) {
+			return owner.nodeType === 1 || owner.nodeType === 9 || !( +owner.nodeType );
+		};
 		class Data{
 			constructor(){
 				this.expando = expando + uid++
+				console.log('expando', this.expando)
 			}
 			cache(owner) {
 				var value = owner[this.expando]
 				if(!value) {
-				  if(owner.nodeType) {
-				    owner[ this.expando ] = value
+				  value = {}
+				  if(acceptData( owner )) {
+						if(owner.nodeType) {
+							owner[ this.expando ] = value
+						}
 					}
 				}
 				return value
@@ -30,7 +43,7 @@
 			  cache = this.cache(owner);
 
 				if(typeof key === "string") {
-					cache[ jQuery.camelCase( data ) ] = value;
+					cache[ jQuery.camelCase( key ) ] = value;
 				} else {
 
 					// Copy the properties one-by-one to the cache object
@@ -40,7 +53,7 @@
 				}
 				return cache
 			}
-			get(owner, elem, key) {
+			get(owner, key) {
 			  return key === undefined ?
 					this.cache(owner) :
 						owner[ this.expando ] && owner[ this.expando ][ jQuery.camelCase( key ) ]
@@ -61,6 +74,7 @@
 		   	try {
 		      data = getData(data)
 				} catch( e ){}
+				console.log('data', data)
 				dataUser.set(elem, name, data)
 			}
 			return data
@@ -100,8 +114,7 @@
 			elems.data = data
 			return elems
 		}
-		var expando = Math.random()
-		var uid = 1
+
 
 
 
