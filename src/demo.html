@@ -9,6 +9,7 @@
 </head>
 <body>
 	<div class="person" data-gender="male"></div>
+	<div id="child2" class="person" data-name="zhang"></div>
 	<script src="../dist/jquery.js"></script>
 	<script>
 		var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,
@@ -107,6 +108,11 @@
 				return data
 			}
 
+			if( typeof key === 'string' ) {
+			  name = jQuery.camelCase( key.slice( 5 ) )
+				dataAttr(elem, name, value)
+			}
+
 		}
 		function myQuery(selector) {
 			var elems = document.querySelectorAll(selector)
@@ -118,13 +124,18 @@
 
 
 
-		var person = myQuery('.person')
+		var person = $('.person')
 		var people = {
 		  name: "ttt",
 			gender: "male"
 		}
-		var d = person.data()
-		console.log(d)
+		//找数组中的每个元素，拿到每个元素的data对象；设置这个值
+//		var d = person.data('love', 'hei')
+//		var d = person.data()
+//		console.log(person.data('love', 'hei'))
+		//有key的情况下只能取数组中第一个元素
+		console.log('name',person.data('gender'))
+//		console.log($('#child2').data())
 	</script>
 </body>
 </html>

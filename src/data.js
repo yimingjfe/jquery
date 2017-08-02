@@ -103,7 +103,6 @@ jQuery.fn.extend( {
 		var i, name, data,
 			elem = this[ 0 ],
 			attrs = elem && elem.attributes;
-
 		// Gets all values
 		if ( key === undefined ) {
 			//如果没有节点，直接返回undefined
@@ -167,7 +166,7 @@ jQuery.fn.extend( {
 
 			// Set the data...
 			this.each( function() {
-
+				console.log(this)
 				// We always store the camelCased key
 				dataUser.set( this, key, value );
 			} );
