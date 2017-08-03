@@ -47,7 +47,7 @@ function getData( data ) {
 	return data;
 }
 
-//如果有data就设置，没有就直接返回data
+//如果有data就返回data，没有就取对应的attribute，然后设置;设置之后返回该data
 function dataAttr( elem, key, data ) {
 	var name;
 
@@ -137,6 +137,7 @@ jQuery.fn.extend( {
 		}
 
 		return access( this, function( value ) {
+			console.log('noen value', value)
 			var data;
 
 			// The calling jQuery object (element matches) is not empty
@@ -145,10 +146,11 @@ jQuery.fn.extend( {
 			// will result in `undefined` for elem = this[ 0 ] which will
 			// throw an exception if an attempt to read a data cache is made.
 			if ( elem && value === undefined ) {
-
+				console.log('执行3')
 				// Attempt to get data from the cache
 				// The key will always be camelCased in Data
 				data = dataUser.get( elem, key );
+				console.log('此时data应该为空对象', data)
 				if ( data !== undefined ) {
 					return data;
 				}

@@ -6,10 +6,11 @@ define( [
 
 // Multifunctional method to get and set values of a collection
 // The value/s can optionally be executed if it's a function
-var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
+
+var access = function( elems, fn, key, value, chainable = false, emptyGet = null, raw = true ) {
 	var i = 0,
 		len = elems.length,
-		bulk = key == null;
+		bulk = key == null; //true
 
 	// Sets many values
 	if ( jQuery.type( key ) === "object" ) {
@@ -41,7 +42,7 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 				};
 			}
 		}
-
+		//如果存在fn,每一个函数都执行fn
 		if ( fn ) {
 			for ( ; i < len; i++ ) {
 				fn(
